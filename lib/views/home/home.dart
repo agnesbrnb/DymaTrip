@@ -1,4 +1,6 @@
-import 'package:VoyagApp/city_card.dart';
+// Definition of HomePage with StatefulWidget
+
+import 'package:VoyagApp/views/home/widgets/city_card.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -23,7 +25,11 @@ class _HomeState extends State<Home> {
       'image': "assets/images/disney.jpg",
       'checked': false
     },
-    {'name': "Annecy", 'image': "assets/images/annecy.jpg", 'checked': false}
+    {
+      'name': "FenouilLand",
+      'image': "assets/images/fenouil.PNG",
+      'checked': false
+    },
   ];
 
   // Switch l'état de l'étoile pour liker une destination

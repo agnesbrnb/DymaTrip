@@ -54,7 +54,8 @@ class CityCard extends StatelessWidget {
                           name,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
                           ),
                         )
                       ],
