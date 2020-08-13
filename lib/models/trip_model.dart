@@ -1,11 +1,11 @@
 class Trip {
   String city;
-  List<String> idCity;
+  List<String> idActivities;
   DateTime date;
 
   Trip({
     this.city,
-    this.idCity,
+    this.idActivities,
     this.date,
   });
 }
