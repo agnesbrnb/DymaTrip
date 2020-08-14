@@ -68,6 +68,12 @@ class _DestinationState extends State<Destination> {
     });
   }
 
+  void deleteActivity(String id) {
+    setState(() {
+      trip.idActivities.remove(id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,6 +100,7 @@ class _DestinationState extends State<Destination> {
                     )
                   : ActivitySaved(
                       activities: tripActivities,
+                      deleteActivity: deleteActivity,
                     ),
             ),
           ],

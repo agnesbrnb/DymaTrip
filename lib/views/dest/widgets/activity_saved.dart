@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class ActivitySaved extends StatelessWidget {
   final List<Activity> activities;
+  final Function deleteActivity;
 
-  ActivitySaved({this.activities});
+  ActivitySaved({this.activities, this.deleteActivity});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,13 @@ class ActivitySaved extends StatelessWidget {
               ),
               title: Text(currentA.name),
               subtitle: Text(currentA.city),
-              trailing: Icon(Icons.delete),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                color: Colors.green,
+                onPressed: () {
+                  deleteActivity(currentA.id);
+                },
+              ),
             ),
           );
         },
