@@ -1,6 +1,7 @@
 // Main file where App is launched
 
-import 'package:VoyagApp/views/dest/dest.dart';
+import 'package:VoyagApp/views/dest/dest_view.dart';
+import 'package:VoyagApp/views/home/home_view.dart';
 import 'package:flutter/material.dart';
 
 // import 'views/home/home.dart';
@@ -17,8 +18,25 @@ class DymaTrip extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      // home: Home()
-      home: Destination(),
+      routes: {
+        '/': (context) {
+          return HomeView();
+        },
+        '/city': (context) {
+          return DestinationView();
+        },
+      },
+      // onGenerateRoute: (settings) {
+      //   print(settings);
+      //   if (settings.name == '/city') {
+      //     final City city = settings.arguments;
+      //     return MaterialPageRoute(builder: (context) {
+      //       return DestinationView(
+      //         city: city,
+      //       );
+      //     });
+      //   }
+      // },
     );
   }
 }

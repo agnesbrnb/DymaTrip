@@ -1,14 +1,13 @@
+import 'package:VoyagApp/models/city_model.dart';
+import 'package:VoyagApp/views/dest/dest_view.dart';
 import 'package:flutter/material.dart';
 
 class CityCard extends StatelessWidget {
   // On peut utiliser final car on ne peut, de toute façon, pas changer les attributs d'un widget stateless
-  final String name;
-  final String image;
-  final bool checked;
-  final Function updateChecked;
+  final City city;
 
   // Constructeur de la classe CityCard
-  CityCard({this.name, this.image, this.checked, this.updateChecked});
+  CityCard({this.city});
 
   @override
   Widget build(BuildContext context) {
@@ -23,44 +22,26 @@ class CityCard extends StatelessWidget {
               Ink.image(
                 fit: BoxFit.cover,
                 image: AssetImage(
-                  image,
+                  city.image,
                 ),
+                // On click go to the city page
                 child: InkWell(onTap: () {
-                  updateChecked();
+                  Navigator.pushNamed(
+                    context,
+                    DestinationView.routeName,
+                    arguments: city,
+                  );
                 }),
               ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: <Widget>[
-                    // Le expanded permet de mettre le texte en bas du Card
-                    Expanded(
-                      child: Row(
-                        // Place l'étoile sur la droite du Card puis en haut du Card
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Icon(
-                            checked ? Icons.star : Icons.star_border,
-                            color: Colors.amber,
-                            size: 40,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          name,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                          ),
-                        )
-                      ],
-                    )
-                  ],
+              Positioned(
+                bottom: 10,
+                left: 10,
+                child: Text(
+                  city.name,
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      backgroundColor: Colors.black54),
                 ),
               )
             ],

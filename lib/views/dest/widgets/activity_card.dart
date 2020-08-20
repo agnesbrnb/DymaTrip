@@ -45,10 +45,15 @@ class ActivityCard extends StatelessWidget {
                 children: [
                   Flexible(
                     child: FittedBox(
-                      child: Text(
-                        activity.name,
-                        style: TextStyle(
-                            fontSize: 15, backgroundColor: Colors.white),
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        child: Text(
+                          activity.name,
+                          style: TextStyle(
+                              fontSize: 15,
+                              backgroundColor: Colors.black54,
+                              color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
