@@ -1,11 +1,16 @@
+import 'package:VoyagApp/models/activity_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+
 class Trip {
+  String id;
   String city;
-  List<String> idActivities;
+  List<Activity> activity;
   DateTime date;
 
   Trip({
-    this.city,
-    this.idActivities,
-    this.date,
-  });
+    @required this.city,
+    @required this.activity,
+    @required this.date,
+  }) : id = UniqueKey().toString();
 }

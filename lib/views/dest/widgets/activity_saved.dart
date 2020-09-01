@@ -25,15 +25,15 @@ class ActivitySaved extends StatelessWidget {
                     title: Text(currentA.name),
                     subtitle: Text(currentA.city),
                     trailing: IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       color: Colors.green,
                       onPressed: () {
                         deleteActivity(currentA.id);
                         // Affiche une SnackBar sur le scaffold en dessous dans l'arbre des widgets
                         Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text("Activité supprimée"),
+                          content: const Text("Activité supprimée"),
                           backgroundColor: Colors.red,
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                           action: SnackBarAction(
                             label: "annuler",
                             onPressed: () {

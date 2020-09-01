@@ -1,7 +1,10 @@
 import 'package:VoyagApp/views/home/home_view.dart';
+import 'package:VoyagApp/views/trips/trips_view.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
+  const MyDrawer();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -29,7 +32,9 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.flight_takeoff),
             title: Text("Mes voyages"),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, TripsView.routeName);
+            },
           )
         ],
       ),

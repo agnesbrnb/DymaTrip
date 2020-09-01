@@ -16,7 +16,7 @@ class TripOverview extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       height: 150,
       color: Colors.white,
       width: orientation == Orientation.landscape
@@ -29,7 +29,7 @@ class TripOverview extends StatelessWidget {
             cityName,
             style: TextStyle(fontSize: 25),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -39,27 +39,28 @@ class TripOverview extends StatelessWidget {
                 myTrip.date != null
                     ? DateFormat("d/M/y").format(myTrip.date)
                     : "Saisir une date",
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               )),
               RaisedButton(
-                child: Text("Choix date"),
+                child: const Text("Choix date"),
                 onPressed: setDate,
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
             children: <Widget>[
               Expanded(
-                  child: Text(
+                  child: const Text(
                 "Montant par personne :",
                 style: TextStyle(fontSize: 18),
               )),
               Text(
                 "$amount €",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               )
             ],
           )

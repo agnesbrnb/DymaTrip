@@ -38,7 +38,7 @@ class CityCard extends StatelessWidget {
                 left: 10,
                 child: Text(
                   city.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 25,
                       color: Colors.white,
                       backgroundColor: Colors.black54),

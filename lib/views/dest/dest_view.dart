@@ -1,7 +1,6 @@
 import 'package:VoyagApp/views/home/home_view.dart';
 import 'package:VoyagApp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:VoyagApp/datas/data.dart' as list_act;
 
 import 'package:VoyagApp/models/activity_model.dart';
 import 'package:VoyagApp/models/trip_model.dart';
@@ -12,13 +11,15 @@ import 'package:VoyagApp/views/dest/widgets/activity_saved.dart';
 import 'package:VoyagApp/views/dest/widgets/trip_overview.dart';
 
 class DestinationView extends StatefulWidget {
-  static String routeName = '/city';
+  static const String routeName = '/city';
+  final City city;
+  final Function addTrip;
 
-  // Liste d'activité à faire dans la ville issue d'un modèle
-  final List<Activity> activities = list_act.activities;
-  // final City city;
+  DestinationView({this.city, this.addTrip});
 
-  // DestinationView({this.city});
+  List<Activity> get activities {
+    return city.activities;
+  }
 
   // Adapt the ui to the device orientation
   showContext({BuildContext context, List<Widget> children}) {
@@ -49,22 +50,14 @@ class _DestinationViewState extends State<DestinationView>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    trip = Trip(city: "DisneyLand", idActivities: [], date: null);
+    trip = Trip(city: widget.city.name, activity: [], date: null);
     index = 0;
-  }
-
-  // Get the selected activities
-  List<Activity> get tripActivities {
-    return widget.activities
-        .where((activity) => trip.idActivities.contains(activity.id))
-        .toList();
   }
 
   // Get the total price of selected activity
   double get amount {
     // Itération sur les activités en gardant la valeur précédente en mémoire entre chaque tour
-    return trip.idActivities.fold(0.0, (prev, index) {
-      var a = widget.activities.firstWhere((a) => a.id == index);
+    return trip.activity.fold(0.0, (prev, a) {
       return prev + a.price;
     });
   }
@@ -107,30 +100,30 @@ class _DestinationViewState extends State<DestinationView>
   }
 
   // Selectionner/Déselectionner une activité depuis la page Découvrir
-  void toggleActivity(String id) {
+  void toggleActivity(Activity activity) {
     // Si l'activité a déjà été enregistrée on la retire, sinon on la sauvegarde
     setState(() {
-      trip.idActivities.contains(id)
-          ? trip.idActivities.remove(id)
-          : trip.idActivities.add(id);
+      trip.activity.contains(activity)
+          ? trip.activity.remove(activity)
+          : trip.activity.add(activity);
     });
   }
 
   // Supprime une activité depuis la page Mes Activités
-  void deleteActivity(String id) {
+  void deleteActivity(Activity activity) {
     setState(() {
-      trip.idActivities.remove(id);
+      trip.activity.remove(activity);
     });
   }
 
-  // Sauvegarder un voyage
+  // Sauvegarder un voyage, boite de dialogue
   void saveTrip() async {
     final result = await showDialog(
       context: context,
       builder: (context) {
         return SimpleDialog(
-          title: Text("Sauvegarder ?"),
-          contentPadding: EdgeInsets.all(20),
+          title: const Text("Sauvegarder ?"),
+          contentPadding: const EdgeInsets.all(20),
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -139,14 +132,14 @@ class _DestinationViewState extends State<DestinationView>
                   onPressed: () {
                     Navigator.pop(context, "save");
                   },
-                  child: Text("Oui"),
+                  child: const Text("Oui"),
                   color: Theme.of(context).accentColor,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                 ),
                 RaisedButton(
-                  child: Text("Nope"),
+                  child: const Text("Nope"),
                   onPressed: () {
                     Navigator.pop(context, "no");
                   },
@@ -157,14 +150,23 @@ class _DestinationViewState extends State<DestinationView>
         );
       },
     );
-    print(result);
-    Navigator.pushNamed(context, HomeView.routeName);
+    if (trip.date == null) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Attention"),
+              content: Text("Vous n\'avez pas entré de date"),
+            );
+          });
+    } else if (result == "save") {
+      widget.addTrip(trip);
+      Navigator.pushNamed(context, HomeView.routeName);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final City city = ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
       appBar: AppBar(
         // leading: IconButton(
@@ -173,15 +175,15 @@ class _DestinationViewState extends State<DestinationView>
         //     Navigator.pop(context);
         //   },
         // ),
-        title: Text("Organiser mon voyage"),
+        title: const Text("Organiser mon voyage"),
       ),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       body: Container(
         child: widget.showContext(
           context: context,
           children: <Widget>[
             TripOverview(
-              cityName: city.name,
+              cityName: widget.city.name,
               setDate: setDate,
               myTrip: trip,
               amount: amount,
@@ -190,11 +192,11 @@ class _DestinationViewState extends State<DestinationView>
               child: index == 0
                   ? ActivityList(
                       activities: widget.activities,
-                      selectedActivities: trip.idActivities,
+                      selectedActivities: trip.activity,
                       toggleActivity: toggleActivity,
                     )
                   : ActivitySaved(
-                      activities: tripActivities,
+                      activities: trip.activity,
                       deleteActivity: deleteActivity,
                     ),
             ),
@@ -203,7 +205,7 @@ class _DestinationViewState extends State<DestinationView>
       ),
       // Bouton de sauvegarde du voyage
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.save_alt),
+        child: const Icon(Icons.save_alt),
         onPressed: saveTrip,
       ),
 
@@ -212,10 +214,10 @@ class _DestinationViewState extends State<DestinationView>
         // permet d'activer le bouton suivant l'index
         currentIndex: index,
         items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.map), title: Text("Découvrir")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.stars), title: Text("Mes activités")),
+          const BottomNavigationBarItem(
+              icon: const Icon(Icons.map), title: Text("Découvrir")),
+          const BottomNavigationBarItem(
+              icon: const Icon(Icons.stars), title: Text("Mes activités")),
         ],
         onTap: switchIndex,
       ),
