@@ -26,7 +26,7 @@ class DymaTrip extends StatefulWidget {
 }
 
 class _DymaTripState extends State<DymaTrip> {
-  List<Trip> trips = [];
+  List<Trip> trips = data.trips;
 
   // Ajout d'un voyage
   void addTrip(Trip trip) {
@@ -74,11 +74,13 @@ class _DymaTripState extends State<DymaTrip> {
           case TripView.routeName:
             {
               return MaterialPageRoute(builder: (context) {
+                // Recupère l'id et le nom du voyage depuis le pushNamed fait dans TripList
                 String tripId =
                     (settings.arguments as Map<String, String>)['tripId'];
                 String cityName =
                     (settings.arguments as Map<String, String>)['cityName'];
                 return TripView(
+                  // Affiche le voyage correspondant
                   trip: trips.firstWhere((trip) => trip.id == tripId),
                   city:
                       widget.cities.firstWhere((city) => city.name == cityName),

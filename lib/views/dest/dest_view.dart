@@ -157,6 +157,14 @@ class _DestinationViewState extends State<DestinationView>
             return AlertDialog(
               title: Text("Attention"),
               content: Text("Vous n\'avez pas entré de date"),
+              actions: [
+                FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
             );
           });
     } else if (result == "save") {
@@ -215,9 +223,13 @@ class _DestinationViewState extends State<DestinationView>
         currentIndex: index,
         items: [
           const BottomNavigationBarItem(
-              icon: const Icon(Icons.map), title: Text("Découvrir")),
+            icon: const Icon(Icons.map),
+            title: Text("Découvrir"),
+          ),
           const BottomNavigationBarItem(
-              icon: const Icon(Icons.stars), title: Text("Mes activités")),
+            icon: const Icon(Icons.stars),
+            title: Text("Mes activités"),
+          ),
         ],
         onTap: switchIndex,
       ),

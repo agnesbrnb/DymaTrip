@@ -1,5 +1,6 @@
 import 'package:VoyagApp/models/activity_model.dart';
 import 'package:VoyagApp/models/city_model.dart';
+import 'package:VoyagApp/models/trip_model.dart';
 
 List<City> cities = [
   City(
@@ -74,4 +75,34 @@ List<City> cities = [
       price: 26.4,
     ),
   ]),
+];
+
+List<Trip> trips = [
+  Trip(
+    city: "Parigné Cheval Aventures",
+    date: DateTime.now().add(Duration(days: 2)),
+    activity: [
+      Activity(
+        image: "assets/images/activities/chateau.jpg",
+        name: "Chateau de la Loire",
+        id: "p1",
+        city: "Parigné Cheval Aventures",
+        price: 700,
+      ),
+      Activity(
+        image: "assets/images/activities/init.jpg",
+        name: "Initiation",
+        id: "p2",
+        city: "Parigné Cheval Aventures",
+        price: 200,
+      ),
+      Activity(
+        image: "assets/images/activities/vignes.jpg",
+        name: "Vignobles",
+        id: "p3",
+        city: "Parigné Cheval Aventures",
+        price: 525,
+      ),
+    ],
+  )
 ];

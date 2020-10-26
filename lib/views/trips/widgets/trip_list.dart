@@ -22,6 +22,7 @@ class TripList extends StatelessWidget {
               ? Text(DateFormat("d/M/y").format(trip.date))
               : null,
           trailing: const Icon(Icons.info),
+          // Au clic ouvrir une TripView pour le voyage sélectionné
           onTap: () {
             Navigator.pushNamed(context, TripView.routeName, arguments: {
               'tripId': trip.id,

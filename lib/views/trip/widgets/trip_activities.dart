@@ -1,4 +1,5 @@
 import 'package:VoyagApp/models/activity_model.dart';
+import 'package:VoyagApp/views/trip/widgets/trip_activity_list.dart';
 import 'package:flutter/material.dart';
 
 class TripActivities extends StatelessWidget {
@@ -13,20 +14,27 @@ class TripActivities extends StatelessWidget {
         length: 2,
         child: Column(
           children: [
-            TabBar(
-              tabs: [
-                Tab(
-                  text: "En cours",
-                ),
-                Tab(
-                  text: "Terminé",
-                )
-              ],
+            Container(
+              color: Theme.of(context).primaryColor,
+              child: TabBar(
+                indicatorColor: Colors.white,
+                tabs: [
+                  Tab(
+                    text: "En cours",
+                  ),
+                  Tab(
+                    text: "Terminé",
+                  )
+                ],
+              ),
             ),
             Container(
               height: 600,
               child: TabBarView(
-                children: [],
+                children: [
+                  TripActivityList(activities: activities),
+                  TripActivityList(activities: activities),
+                ],
               ),
             )
           ],
