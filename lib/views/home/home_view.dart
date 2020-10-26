@@ -1,15 +1,14 @@
 // Definition of HomePage with StatefulWidget
 
 import 'package:VoyagApp/models/city_model.dart';
+import 'package:VoyagApp/providers/city_provider.dart';
 import 'package:VoyagApp/views/home/widgets/city_card.dart';
 import 'package:VoyagApp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   static String routeName = '/';
-  final List<City> cities;
-
-  HomeView({this.cities});
 
   // Cette fonction va retourner une instance de HomeState à chaque modification de l'état et donc de HomeState
   @override
@@ -22,6 +21,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
+    List<City> cities = Provider.of<CityProvider>(context).cities;
     return Container(
       child: Scaffold(
         appBar: AppBar(title: Text("DymaTrip")),
@@ -30,12 +30,11 @@ class _HomeViewState extends State<HomeView> {
           padding: const EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              // Itération sur la liste de destination pour afficher les Card
-              ...widget.cities.map((city) {
-                return CityCard(city: city);
-              }),
-            ],
+            children:
+                // Itération sur la liste de destination pour afficher les Card
+                cities.map((city) {
+              return CityCard(city: city);
+            }).toList(),
           ),
         ),
       ),
