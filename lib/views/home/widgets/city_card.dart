@@ -29,7 +29,7 @@ class CityCard extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     DestinationView.routeName,
-                    arguments: city,
+                    arguments: city.name,
                   );
                 }),
               ),

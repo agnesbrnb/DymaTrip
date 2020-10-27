@@ -1,23 +1,19 @@
 import 'package:VoyagApp/models/trip_model.dart';
+import 'package:VoyagApp/providers/trip_provider.dart';
 import 'package:VoyagApp/views/trips/widgets/trip_list.dart';
 
 import 'package:VoyagApp/widgets/drawer.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class TripsView extends StatefulWidget {
+class TripsView extends StatelessWidget {
   static const String routeName = "/trips";
-  final List<Trip> trips;
 
-  TripsView({this.trips});
-
-  @override
-  _TripsViewState createState() => _TripsViewState();
-}
-
-class _TripsViewState extends State<TripsView> {
   @override
   Widget build(BuildContext context) {
+    List<Trip> trips = Provider.of<TripProvider>(context).trips;
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -38,12 +34,12 @@ class _TripsViewState extends State<TripsView> {
           body: TabBarView(
             children: [
               TripList(
-                trips: widget.trips
+                trips: trips
                     .where((trip) => DateTime.now().isBefore(trip.date))
                     .toList(),
               ),
               TripList(
-                trips: widget.trips
+                trips: trips
                     .where((trip) => DateTime.now().isAfter(trip.date))
                     .toList(),
               ),

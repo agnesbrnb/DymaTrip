@@ -1,3 +1,5 @@
+import 'package:VoyagApp/providers/city_provider.dart';
+import 'package:VoyagApp/providers/trip_provider.dart';
 import 'package:VoyagApp/views/home/home_view.dart';
 import 'package:VoyagApp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
@@ -9,17 +11,10 @@ import 'package:VoyagApp/models/city_model.dart';
 import 'package:VoyagApp/views/dest/widgets/activity_list.dart';
 import 'package:VoyagApp/views/dest/widgets/activity_saved.dart';
 import 'package:VoyagApp/views/dest/widgets/trip_overview.dart';
+import 'package:provider/provider.dart';
 
 class DestinationView extends StatefulWidget {
   static const String routeName = '/city';
-  final City city;
-  final Function addTrip;
-
-  DestinationView({this.city, this.addTrip});
-
-  List<Activity> get activities {
-    return city.activities;
-  }
 
   // Adapt the ui to the device orientation
   showContext({BuildContext context, List<Widget> children}) {
@@ -50,7 +45,11 @@ class _DestinationViewState extends State<DestinationView>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    trip = Trip(city: widget.city.name, activity: [], date: null);
+    trip = Trip(
+      city: null,
+      activity: [],
+      date: null,
+    );
     index = 0;
   }
 
@@ -117,7 +116,7 @@ class _DestinationViewState extends State<DestinationView>
   }
 
   // Sauvegarder un voyage, boite de dialogue
-  void saveTrip() async {
+  void saveTrip(String cityName) async {
     final result = await showDialog(
       context: context,
       builder: (context) {
@@ -168,13 +167,18 @@ class _DestinationViewState extends State<DestinationView>
             );
           });
     } else if (result == "save") {
-      widget.addTrip(trip);
+      trip.city = cityName;
+      Provider.of<TripProvider>(context).addTrip(trip);
       Navigator.pushNamed(context, HomeView.routeName);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    String cityName = ModalRoute.of(context).settings.arguments;
+    // Recupérer la ville qui correspond au clic
+    City city = Provider.of<CityProvider>(context).getCityByName(cityName);
+
     return Scaffold(
       appBar: AppBar(
         // leading: IconButton(
@@ -191,7 +195,7 @@ class _DestinationViewState extends State<DestinationView>
           context: context,
           children: <Widget>[
             TripOverview(
-              cityName: widget.city.name,
+              cityName: city.name,
               setDate: setDate,
               myTrip: trip,
               amount: amount,
@@ -199,7 +203,7 @@ class _DestinationViewState extends State<DestinationView>
             Expanded(
               child: index == 0
                   ? ActivityList(
-                      activities: widget.activities,
+                      activities: city.activities,
                       selectedActivities: trip.activity,
                       toggleActivity: toggleActivity,
                     )
@@ -214,7 +218,9 @@ class _DestinationViewState extends State<DestinationView>
       // Bouton de sauvegarde du voyage
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.save_alt),
-        onPressed: saveTrip,
+        onPressed: () {
+          saveTrip(city.name);
+        },
       ),
 
       // Barre de navigation en bas de page
