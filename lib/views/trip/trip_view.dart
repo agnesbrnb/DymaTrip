@@ -1,7 +1,5 @@
 import 'package:VoyagApp/models/city_model.dart';
-import 'package:VoyagApp/models/trip_model.dart';
 import 'package:VoyagApp/providers/city_provider.dart';
-import 'package:VoyagApp/providers/trip_provider.dart';
 import 'package:VoyagApp/views/trip/widgets/trip_activities.dart';
 import 'package:VoyagApp/views/trip/widgets/trip_city_bar.dart';
 
@@ -17,9 +15,8 @@ class TripView extends StatelessWidget {
         as Map<String, String>)['cityName'];
     final String tripId = (ModalRoute.of(context).settings.arguments
         as Map<String, String>)['tripId'];
-    final City city =
-        Provider.of<CityProvider>(context).getCityByName(cityName);
-    final Trip trip = Provider.of<TripProvider>(context).getTripById(tripId);
+    final City city = Provider.of<CityProvider>(context, listen: false)
+        .getCityByName(cityName);
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -29,7 +26,9 @@ class TripView extends StatelessWidget {
             TripCityBar(
               city: city,
             ),
-            TripActivities(activities: trip.activity)
+            TripActivities(
+              tripId: tripId,
+            )
           ],
         ),
       ),

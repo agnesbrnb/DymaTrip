@@ -26,15 +26,6 @@ class DymaTrip extends StatefulWidget {
 }
 
 class _DymaTripState extends State<DymaTrip> {
-  // List<Trip> trips = data.trips;
-
-  // Ajout d'un voyage
-  // void addTrip(Trip trip) {
-  //   setState(() {
-  //     trips.add(trip);
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

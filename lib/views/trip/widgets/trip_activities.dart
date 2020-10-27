@@ -3,9 +3,9 @@ import 'package:VoyagApp/views/trip/widgets/trip_activity_list.dart';
 import 'package:flutter/material.dart';
 
 class TripActivities extends StatelessWidget {
-  final List<Activity> activities;
+  final String tripId;
 
-  TripActivities({this.activities});
+  TripActivities({this.tripId});
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +33,13 @@ class TripActivities extends StatelessWidget {
               child: TabBarView(
                 children: [
                   TripActivityList(
-                      filter: ActivityStatus.ongoing,
-                      activities: activities
-                          .where((a) => a.status == ActivityStatus.ongoing)
-                          .toList()),
+                    filter: ActivityStatus.ongoing,
+                    tripId: tripId,
+                  ),
                   TripActivityList(
-                      filter: ActivityStatus.done,
-                      activities: activities
-                          .where((a) => a.status == ActivityStatus.done)
-                          .toList()),
+                    filter: ActivityStatus.done,
+                    tripId: tripId,
+                  ),
                 ],
               ),
             )

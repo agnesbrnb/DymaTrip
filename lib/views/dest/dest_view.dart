@@ -149,7 +149,7 @@ class _DestinationViewState extends State<DestinationView>
         );
       },
     );
-    if (trip.date == null) {
+    if (result == "save" && trip.date == null) {
       showDialog(
           context: context,
           builder: (context) {
