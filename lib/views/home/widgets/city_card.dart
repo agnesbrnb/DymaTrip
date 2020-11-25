@@ -19,6 +19,7 @@ class CityCard extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: <Widget>[
+              // Image avec effet visuel
               Ink.image(
                 fit: BoxFit.cover,
                 image: AssetImage(

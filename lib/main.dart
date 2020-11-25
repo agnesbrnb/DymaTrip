@@ -2,8 +2,8 @@
 
 import 'package:VoyagApp/providers/city_provider.dart';
 import 'package:VoyagApp/providers/trip_provider.dart';
-import 'package:VoyagApp/views/dest/dest_view.dart';
 
+import 'package:VoyagApp/views/dest/dest_view.dart';
 import 'package:VoyagApp/views/home/home_view.dart';
 import 'package:VoyagApp/views/trip/trip_view.dart';
 import 'package:VoyagApp/views/trips/trips_view.dart';
